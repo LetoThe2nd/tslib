@@ -85,7 +85,13 @@ ts_calibrate_LDADD	= $(top_builddir)/src/libts.la
 if FREEBSD
 ts_calibrate_SOURCES	+= fbutils-bsd.c
 else
+if DRM
+ts_calibrate_SOURCES	+= drmutils.c
+ts_calibrate_CFLAGS		= $(AM_CFLAGS) @libdrm_CFLAGS@
+ts_calibrate_LDADD		+= @libdrm_LIBS@
+else
 ts_calibrate_SOURCES	+= fbutils-linux.c
+endif
 endif
 endif
 

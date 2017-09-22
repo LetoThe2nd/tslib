@@ -178,6 +178,16 @@ AS_IF([test "x$with_sdl2" = "xyes"], [
   AC_CHECK_LIB([SDL2], [SDL_Init], [], [exit 1])
 ])
 
+AC_ARG_WITH(drm,
+  [AS_HELP_STRING([--with-drm], [build ts_calibrate using drm])],
+  [with_drm=$withval],
+  [with_drm=no])
+
+AM_CONDITIONAL(DRM, test x"$with_drm" = "xyes")
+AS_IF([test "x$with_drm" = "xyes"], [
+  PKG_CHECK_MODULES([libdrm], [libdrm >= 2.4.54], [], [exit 1])
+])
+
 # libts Library versioning
 # increment if the interface changed
 LT_CURRENT=8
